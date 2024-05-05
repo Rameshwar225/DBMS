@@ -1,0 +1,386 @@
+EXPERIMENT NO : 7
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\DELL> mysql -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show  databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| seit1              |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use seit1;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_seit1 |
++-----------------+
+| dept            |
+| emp             |
+| project         |
++-----------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from dept;
++--------+------------+----------+
+| deptno | dname      | loc      |
++--------+------------+----------+
+|     10 | accouting  | new york |
+|     20 | research   | dallas   |
+|     30 | sales      | chicago  |
+|     40 | operations | boston   |
++--------+------------+----------+
+4 rows in set (0.02 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+------+------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | smith  | clerk     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | allen  | saleman   | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | ward   | saleman   | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | jones  | manager   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | martin | saleman   | 7698 | 1981-10-28 | 1250 | 1400 |     30 |
+|  7698 | blake  | manager   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | clark  | manager   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | scott  | analyst   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | king   | president | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | turner | saleman   | 7698 | 1981-10-08 | 1500 | NULL |     30 |
+|  7876 | adams  | clerk     | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7900 | james  | clerk     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | ford   | analyst   | 7566 | 1981-12-04 | 3000 | NULL |     20 |
+|  7934 | miller | clerk     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+14 rows in set (0.00 sec)
+
+mysql> select * from emp where job like 'manager';
++-------+-------+---------+------+------------+------+------+--------+
+| empno | ename | job     | mgr  | hiredate   | sal  | comm | deptno |
++-------+-------+---------+------+------------+------+------+--------+
+|  7566 | jones | manager | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7698 | blake | manager | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | clark | manager | 7839 | 1981-06-09 | 2450 | NULL |     10 |
++-------+-------+---------+------+------------+------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp where comm is null;
++-------+--------+-----------+------+------------+------+------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | smith  | clerk     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7566 | jones  | manager   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7698 | blake  | manager   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | clark  | manager   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | scott  | analyst   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | king   | president | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | turner | saleman   | 7698 | 1981-10-08 | 1500 | NULL |     30 |
+|  7876 | adams  | clerk     | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7900 | james  | clerk     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | ford   | analyst   | 7566 | 1981-12-04 | 3000 | NULL |     20 |
+|  7934 | miller | clerk     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+11 rows in set (0.00 sec)
+
+mysql> select * from emp where sal between 1000 and 3000;
++-------+--------+---------+------+------------+------+------+--------+
+| empno | ename  | job     | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+---------+------+------------+------+------+--------+
+|  7499 | allen  | saleman | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | ward   | saleman | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | jones  | manager | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | martin | saleman | 7698 | 1981-10-28 | 1250 | 1400 |     30 |
+|  7698 | blake  | manager | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | clark  | manager | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | scott  | analyst | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7844 | turner | saleman | 7698 | 1981-10-08 | 1500 | NULL |     30 |
+|  7876 | adams  | clerk   | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7902 | ford   | analyst | 7566 | 1981-12-04 | 3000 | NULL |     20 |
+|  7934 | miller | clerk   | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+---------+------+------------+------+------+--------+
+11 rows in set (0.00 sec)
+
+mysql> select * from emp where ename like '%s';
++-------+-------+---------+------+------------+------+------+--------+
+| empno | ename | job     | mgr  | hiredate   | sal  | comm | deptno |
++-------+-------+---------+------+------------+------+------+--------+
+|  7566 | jones | manager | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7876 | adams | clerk   | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7900 | james | clerk   | 7698 | 1981-12-03 |  950 | NULL |     30 |
++-------+-------+---------+------+------------+------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp order by sal desc;
++-------+--------+-----------+------+------------+------+------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7839 | king   | president | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7788 | scott  | analyst   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7902 | ford   | analyst   | 7566 | 1981-12-04 | 3000 | NULL |     20 |
+|  7566 | jones  | manager   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7698 | blake  | manager   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | clark  | manager   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7499 | allen  | saleman   | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7844 | turner | saleman   | 7698 | 1981-10-08 | 1500 | NULL |     30 |
+|  7934 | miller | clerk     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
+|  7521 | ward   | saleman   | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7654 | martin | saleman   | 7698 | 1981-10-28 | 1250 | 1400 |     30 |
+|  7876 | adams  | clerk     | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7900 | james  | clerk     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7369 | smith  | clerk     | 7902 | 1980-12-17 |  800 | NULL |     20 |
++-------+--------+-----------+------+------------+------+------+--------+
+14 rows in set (0.00 sec)
+
+mysql> select min(sal) from emp where deptno=20;
++----------+
+| min(sal) |
++----------+
+|      800 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select sum(sal) from emp where deptno=10;
++----------+
+| sum(sal) |
++----------+
+|     8750 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select deptno, sum(sal) from emp group by deptno;
++--------+----------+
+| deptno | sum(sal) |
++--------+----------+
+|     10 |     8750 |
+|     20 |    10875 |
+|     30 |     9400 |
++--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select e.empno,e.ename,e.sal,d.dname,d.loc from emp e, dept d where e.deptno=d.deptno;
++-------+--------+------+-----------+----------+
+| empno | ename  | sal  | dname     | loc      |
++-------+--------+------+-----------+----------+
+|  7782 | clark  | 2450 | accouting | new york |
+|  7839 | king   | 5000 | accouting | new york |
+|  7934 | miller | 1300 | accouting | new york |
+|  7369 | smith  |  800 | research  | dallas   |
+|  7566 | jones  | 2975 | research  | dallas   |
+|  7788 | scott  | 3000 | research  | dallas   |
+|  7876 | adams  | 1100 | research  | dallas   |
+|  7902 | ford   | 3000 | research  | dallas   |
+|  7499 | allen  | 1600 | sales     | chicago  |
+|  7521 | ward   | 1250 | sales     | chicago  |
+|  7654 | martin | 1250 | sales     | chicago  |
+|  7698 | blake  | 2850 | sales     | chicago  |
+|  7844 | turner | 1500 | sales     | chicago  |
+|  7900 | james  |  950 | sales     | chicago  |
++-------+--------+------+-----------+----------+
+14 rows in set (0.00 sec)
+
+mysql> select e.empno,e.ename,e.sal,d.dname,d.loc from emp e right outer join dept d on e.deptno=d.deptno;
++-------+--------+------+------------+----------+
+| empno | ename  | sal  | dname      | loc      |
++-------+--------+------+------------+----------+
+|  7782 | clark  | 2450 | accouting  | new york |
+|  7839 | king   | 5000 | accouting  | new york |
+|  7934 | miller | 1300 | accouting  | new york |
+|  7369 | smith  |  800 | research   | dallas   |
+|  7566 | jones  | 2975 | research   | dallas   |
+|  7788 | scott  | 3000 | research   | dallas   |
+|  7876 | adams  | 1100 | research   | dallas   |
+|  7902 | ford   | 3000 | research   | dallas   |
+|  7499 | allen  | 1600 | sales      | chicago  |
+|  7521 | ward   | 1250 | sales      | chicago  |
+|  7654 | martin | 1250 | sales      | chicago  |
+|  7698 | blake  | 2850 | sales      | chicago  |
+|  7844 | turner | 1500 | sales      | chicago  |
+|  7900 | james  |  950 | sales      | chicago  |
+|  NULL | NULL   | NULL | operations | boston   |
++-------+--------+------+------------+----------+
+15 rows in set (0.00 sec)
+
+mysql> select e.empno,e.ename,m.empno,m.ename from emp e, emp m where e.mgr=m.empno;
++-------+--------+-------+-------+
+| empno | ename  | empno | ename |
++-------+--------+-------+-------+
+|  7369 | smith  |  7902 | ford  |
+|  7499 | allen  |  7698 | blake |
+|  7521 | ward   |  7698 | blake |
+|  7566 | jones  |  7839 | king  |
+|  7654 | martin |  7698 | blake |
+|  7698 | blake  |  7839 | king  |
+|  7782 | clark  |  7839 | king  |
+|  7788 | scott  |  7566 | jones |
+|  7844 | turner |  7698 | blake |
+|  7876 | adams  |  7788 | scott |
+|  7900 | james  |  7698 | blake |
+|  7902 | ford   |  7566 | jones |
+|  7934 | miller |  7782 | clark |
++-------+--------+-------+-------+
+13 rows in set (0.00 sec)
+
+mysql> select job from emp where deptno=10 union select job from emp where deptno=20;
++-----------+
+| job       |
++-----------+
+| manager   |
+| president |
+| clerk     |
+| analyst   |
++-----------+
+4 rows in set (0.01 sec)
+
+mysql> select job from emp where deptno=10 intersect select job from emp where deptno=20;
++---------+
+| job     |
++---------+
+| manager |
+| clerk   |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp where deptno=(select deptno from emp where ename like 'miller' limit 1);
++-------+--------+-----------+------+------------+------+------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7782 | clark  | manager   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7839 | king   | president | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7934 | miller | clerk     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp where sal > all(select sal from emp where deptno=20);
++-------+-------+-----------+------+------------+------+------+--------+
+| empno | ename | job       | mgr  | hiredate   | sal  | comm | deptno |
++-------+-------+-----------+------+------------+------+------+--------+
+|  7839 | king  | president | NULL | 1981-11-17 | 5000 | NULL |     10 |
++-------+-------+-----------+------+------------+------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> select e.ename worker, m.ename manager from emp e left outer join emp m
+    -> on e.mgr=m.empno;
++--------+---------+
+| worker | manager |
++--------+---------+
+| smith  | ford    |
+| allen  | blake   |
+| ward   | blake   |
+| jones  | king    |
+| martin | blake   |
+| blake  | king    |
+| clark  | king    |
+| scott  | jones   |
+| king   | NULL    |
+| turner | blake   |
+| adams  | scott   |
+| james  | blake   |
+| ford   | jones   |
+| miller | clark   |
++--------+---------+
+14 rows in set (0.01 sec)
+
+mysql> select e.empno, e.ename, m.ename from emp e left outer join emp m on
+
+    -> m.empno=e.mgr;
++-------+--------+-------+
+| empno | ename  | ename |
++-------+--------+-------+
+|  7369 | smith  | ford  |
+|  7499 | allen  | blake |
+|  7521 | ward   | blake |
+|  7566 | jones  | king  |
+|  7654 | martin | blake |
+|  7698 | blake  | king  |
+|  7782 | clark  | king  |
+|  7788 | scott  | jones |
+|  7839 | king   | NULL  |
+|  7844 | turner | blake |
+|  7876 | adams  | scott |
+|  7900 | james  | blake |
+|  7902 | ford   | jones |
+|  7934 | miller | clark |
++-------+--------+-------+
+14 rows in set (0.00 sec)
+
+mysql> select e.ename worker, m.ename manager from emp e left outer join emp m
+    -> on e.mgr=m.empno;
++--------+---------+
+| worker | manager |
++--------+---------+
+| smith  | ford    |
+| allen  | blake   |
+| ward   | blake   |
+| jones  | king    |
+| martin | blake   |
+| blake  | king    |
+| clark  | king    |
+| scott  | jones   |
+| king   | NULL    |
+| turner | blake   |
+| adams  | scott   |
+| james  | blake   |
+| ford   | jones   |
+| miller | clark   |
++--------+---------+
+14 rows in set (0.00 sec)
+
+mysql> select job from emp where deptno=10 union select job from emp where
+    -> deptno=20;
++-----------+
+| job       |
++-----------+
+| manager   |
+| president |
+| clerk     |
+| analyst   |
++-----------+
+4 rows in set (0.01 sec)
+
+mysql> select * from emp where deptno=20 and sal >= (select avg(sal) from emp
+    -> where deptno =20 group by deptno);
++-------+-------+---------+------+------------+------+------+--------+
+| empno | ename | job     | mgr  | hiredate   | sal  | comm | deptno |
++-------+-------+---------+------+------------+------+------+--------+
+|  7566 | jones | manager | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7788 | scott | analyst | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7902 | ford  | analyst | 7566 | 1981-12-04 | 3000 | NULL |     20 |
++-------+-------+---------+------+------------+------+------+--------+
+3 rows in set (0.01 sec)
+
+mysql> select e.ename worker, m.ename manager, e.hiredate, m.hiredate from emp
+    -> e, emp m where e.mgr=m.empno and e.hiredate<m.hiredate;
++--------+---------+------------+------------+
+| worker | manager | hiredate   | hiredate   |
++--------+---------+------------+------------+
+| smith  | ford    | 1980-12-17 | 1981-12-04 |
+| allen  | blake   | 1981-02-20 | 1981-05-01 |
+| ward   | blake   | 1981-02-22 | 1981-05-01 |
+| jones  | king    | 1981-04-02 | 1981-11-17 |
+| blake  | king    | 1981-05-01 | 1981-11-17 |
+| clark  | king    | 1981-06-09 | 1981-11-17 |
++--------+---------+------------+------------+
+6 rows in set (0.00 sec)

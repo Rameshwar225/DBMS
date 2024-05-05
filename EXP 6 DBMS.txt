@@ -1,0 +1,221 @@
+EXPERIMENT NO-6
+
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\DELL> mysql -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 16
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| seit1              |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.01 sec)
+
+mysql> create seit;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'seit' at line 1
+mysql> create database seit;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use seit;
+Database changed
+
+mysql> create table emp1(empno int primary key, ename varchar(20), job char(20), mgr int, hiredate date, sal float, comm
+ float, deptno int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc emp1;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| empno    | int         | NO   | PRI | NULL    |       |
+| ename    | varchar(20) | YES  |     | NULL    |       |
+| job      | char(20)    | YES  |     | NULL    |       |
+| mgr      | int         | YES  |     | NULL    |       |
+| hiredate | date        | YES  |     | NULL    |       |
+| sal      | float       | YES  |     | NULL    |       |
+| comm     | float       | YES  |     | NULL    |       |
+| deptno   | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+mysql> alter table emp1 add grade varchar(10);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc emp1;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| empno    | int         | NO   | PRI | NULL    |       |
+| ename    | varchar(20) | YES  |     | NULL    |       |
+| job      | char(20)    | YES  |     | NULL    |       |
+| mgr      | int         | YES  |     | NULL    |       |
+| hiredate | date        | YES  |     | NULL    |       |
+| sal      | float       | YES  |     | NULL    |       |
+| comm     | float       | YES  |     | NULL    |       |
+| deptno   | int         | YES  |     | NULL    |       |
+| grade    | varchar(10) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> Alter table emp1 add constraint SAL_C  check (sal>100);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc emp1;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| empno    | int         | NO   | PRI | NULL    |       |
+| ename    | varchar(20) | YES  |     | NULL    |       |
+| job      | char(20)    | YES  |     | NULL    |       |
+| mgr      | int         | YES  |     | NULL    |       |
+| hiredate | date        | YES  |     | NULL    |       |
+| sal      | float       | YES  |     | NULL    |       |
+| comm     | float       | YES  |     | NULL    |       |
+| deptno   | int         | YES  |     | NULL    |       |
+| grade    | varchar(10) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> INSERT INTO emp1(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+    -> VALUES (1, 'John Doe', 'Manager', NULL, '2020-01-15', 5000.00, NULL, 10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO emp1(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+    -> VALUES (2, 'Sandesh Dhumal', 'Analyst', 1, '2021-03-20', 4000.00, 500.00, 20), (3, 'Abhijeet Kharade', 'Developer', 1, '2021-05-10', 4500.00, 200.00, 10),  (4, 'Ashish Jawane', 'Clerk', 2, '2022-02-28', 3000.00, NULL, 20);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> show * from emp1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* from emp1' at line 1
+mysql> shows * from emp1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'shows * from emp1' at line 1
+mysql> select * from emp1;
++-------+------------------+-----------+------+------------+------+------+--------+-------+
+| empno | ename            | job       | mgr  | hiredate   | sal  | comm | deptno | grade |
++-------+------------------+-----------+------+------------+------+------+--------+-------+
+|     1 | John Doe         | Manager   | NULL | 2020-01-15 | 5000 | NULL |     10 | NULL  |
+|     2 | Sandesh Dhumal   | Analyst   |    1 | 2021-03-20 | 4000 |  500 |     20 | NULL  |
+|     3 | Abhijeet Kharade | Developer |    1 | 2021-05-10 | 4500 |  200 |     10 | NULL  |
+|     4 | Ashish Jawane    | Clerk     |    2 | 2022-02-28 | 3000 | NULL |     20 | NULL  |
++-------+------------------+-----------+------+------------+------+------+--------+-------+
+4 rows in set (0.00 sec)
+
+mysql> Alter table emp1 modify sal float(14,2);
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> desc emp1;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| empno    | int         | NO   | PRI | NULL    |       |
+| ename    | varchar(20) | YES  |     | NULL    |       |
+| job      | char(20)    | YES  |     | NULL    |       |
+| mgr      | int         | YES  |     | NULL    |       |
+| hiredate | date        | YES  |     | NULL    |       |
+| sal      | float(14,2) | YES  |     | NULL    |       |
+| comm     | float       | YES  |     | NULL    |       |
+| deptno   | int         | YES  |     | NULL    |       |
+| grade    | varchar(10) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> drop table emp1;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE student (
+    ->     rollno INT,
+    ->     name VARCHAR(20) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> ALTER TABLE student
+    -> ADD CONSTRAINT pk_student_rollno PRIMARY KEY (rollno);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | NO   | PRI | NULL    |       |
+| name   | varchar(20) | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE student
+    -> DROP PRIMARY KEY;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | NO   |     | NULL    |       |
+| name   | varchar(20) | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE student
+    -> ADD CONSTRAINT chkRoll CHECK (rollno > 100);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE student
+    -> DROP CONSTRAINT chkRoll;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE student
+    -> ALTER COLUMN name SET DEFAULT 'Sandesh Dhumal';
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE student
+    -> ALTER COLUMN name DROP DEFAULT;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE student
+    -> MODIFY COLUMN name VARCHAR(20) NOT NULL;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | NO   |     | NULL    |       |
+| name   | varchar(20) | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql>

@@ -1,0 +1,236 @@
+EXPERIMENT NO : 8
+
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\DELL> mysql -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| seit1              |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use seit1;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_seit1 |
++-----------------+
+| dept            |
+| emp             |
+| project         |
++-----------------+
+3 rows in set (0.00 sec)
+
+mysql> create table emp1 as select * from emp;
+Query OK, 14 rows affected (0.04 sec)
+Records: 14  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp1;
++-------+--------+-----------+------+------------+------+------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | smith  | clerk     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | allen  | saleman   | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | ward   | saleman   | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | jones  | manager   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | martin | saleman   | 7698 | 1981-10-28 | 1250 | 1400 |     30 |
+|  7698 | blake  | manager   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | clark  | manager   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | scott  | analyst   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | king   | president | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | turner | saleman   | 7698 | 1981-10-08 | 1500 | NULL |     30 |
+|  7876 | adams  | clerk     | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7900 | james  | clerk     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | ford   | analyst   | 7566 | 1981-12-04 | 3000 | NULL |     20 |
+|  7934 | miller | clerk     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+14 rows in set (0.00 sec)
+
+mysql> create or replace view dept20 as select * from emp1 where deptno=20;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from dept20;
++-------+-------+---------+------+------------+------+------+--------+
+| empno | ename | job     | mgr  | hiredate   | sal  | comm | deptno |
++-------+-------+---------+------+------------+------+------+--------+
+|  7369 | smith | clerk   | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7566 | jones | manager | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7788 | scott | analyst | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7876 | adams | clerk   | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7902 | ford  | analyst | 7566 | 1981-12-04 | 3000 | NULL |     20 |
++-------+-------+---------+------+------------+------+------+--------+
+5 rows in set (0.01 sec)
+
+mysql> update dept20 set comm=100 where comm is not null;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select * from emp1;
++-------+--------+-----------+------+------------+------+------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | smith  | clerk     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | allen  | saleman   | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | ward   | saleman   | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | jones  | manager   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | martin | saleman   | 7698 | 1981-10-28 | 1250 | 1400 |     30 |
+|  7698 | blake  | manager   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | clark  | manager   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | scott  | analyst   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | king   | president | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | turner | saleman   | 7698 | 1981-10-08 | 1500 | NULL |     30 |
+|  7876 | adams  | clerk     | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7900 | james  | clerk     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | ford   | analyst   | 7566 | 1981-12-04 | 3000 | NULL |     20 |
+|  7934 | miller | clerk     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+14 rows in set (0.00 sec)
+
+mysql> delete from dept20 where empno=7369;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp1;
++-------+--------+-----------+------+------------+------+------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7499 | allen  | saleman   | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | ward   | saleman   | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | jones  | manager   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | martin | saleman   | 7698 | 1981-10-28 | 1250 | 1400 |     30 |
+|  7698 | blake  | manager   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | clark  | manager   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | scott  | analyst   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | king   | president | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | turner | saleman   | 7698 | 1981-10-08 | 1500 | NULL |     30 |
+|  7876 | adams  | clerk     | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7900 | james  | clerk     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | ford   | analyst   | 7566 | 1981-12-04 | 3000 | NULL |     20 |
+|  7934 | miller | clerk     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+13 rows in set (0.00 sec)
+
+mysql> create or replace view dept30 as select * from emp1 where deptno=30 with check option;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from dept20;
++-------+-------+---------+------+------------+------+------+--------+
+| empno | ename | job     | mgr  | hiredate   | sal  | comm | deptno |
++-------+-------+---------+------+------------+------+------+--------+
+|  7566 | jones | manager | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7788 | scott | analyst | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7876 | adams | clerk   | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7902 | ford  | analyst | 7566 | 1981-12-04 | 3000 | NULL |     20 |
++-------+-------+---------+------+------------+------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from dept30;
++-------+--------+---------+------+------------+------+------+--------+
+| empno | ename  | job     | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+---------+------+------------+------+------+--------+
+|  7499 | allen  | saleman | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | ward   | saleman | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7654 | martin | saleman | 7698 | 1981-10-28 | 1250 | 1400 |     30 |
+|  7698 | blake  | manager | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7844 | turner | saleman | 7698 | 1981-10-08 | 1500 | NULL |     30 |
+|  7900 | james  | clerk   | 7698 | 1981-12-03 |  950 | NULL |     30 |
++-------+--------+---------+------+------------+------+------+--------+
+6 rows in set (0.00 sec)
+
+mysql> insert into dept30 values (73,'akash','clerk',7902,'1980-12-17',800,null,20);
+ERROR 1369 (HY000): CHECK OPTION failed 'seit1.dept30'
+mysql> select * from dept30;
++-------+--------+---------+------+------------+------+------+--------+
+| empno | ename  | job     | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+---------+------+------------+------+------+--------+
+|  7499 | allen  | saleman | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | ward   | saleman | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7654 | martin | saleman | 7698 | 1981-10-28 | 1250 | 1400 |     30 |
+|  7698 | blake  | manager | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7844 | turner | saleman | 7698 | 1981-10-08 | 1500 | NULL |     30 |
+|  7900 | james  | clerk   | 7698 | 1981-12-03 |  950 | NULL |     30 |
++-------+--------+---------+------+------------+------+------+--------+
+6 rows in set (0.00 sec)
+mysql> create view empview as select e.empno, e.ename, e.sal, e.deptno, d.dn
+ame from emp e join dept d on e.deptno=d.deptno;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from empview;
++-------+--------+------+--------+-----------+
+| empno | ename  | sal  | deptno | dname     |
++-------+--------+------+--------+-----------+
+|  7782 | clark  | 2450 |     10 | accouting |
+|  7839 | king   | 5000 |     10 | accouting |
+|  7934 | miller | 1300 |     10 | accouting |
+|  7369 | smith  |  800 |     20 | research  |
+|  7566 | jones  | 2975 |     20 | research  |
+|  7788 | scott  | 3000 |     20 | research  |
+|  7876 | adams  | 1100 |     20 | research  |
+|  7902 | ford   | 3000 |     20 | research  |
+|  7499 | allen  | 1600 |     30 | sales     |
+|  7521 | ward   | 1250 |     30 | sales     |
+|  7654 | martin | 1250 |     30 | sales     |
+|  7698 | blake  | 2850 |     30 | sales     |
+|  7844 | turner | 1500 |     30 | sales     |
+|  7900 | james  |  950 |     30 | sales     |
++-------+--------+------+--------+-----------+
+14 rows in set (0.00 sec)
+
+mysql> drop view empview;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> drop view dept20;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> drop view dept30;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create view emp1 as select d.deptno, dname, sum(sal) sal from emp join dept d on d.deptno=emp.deptno group by deptno;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc emp1;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| deptno | int         | NO   |     | NULL    |       |
+| dname  | varchar(20) | YES  |     | NULL    |       |
+| sal    | double      | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp1;
++--------+-----------+-------+
+| deptno | dname     | sal   |
++--------+-----------+-------+
+|     20 | research  | 10875 |
+|     30 | sales     |  9400 |
+|     10 | accouting |  8750 |
++--------+-----------+-------+
+3 rows in set (0.00 sec)
+
+mysql> drop view emp1;
+Query OK, 0 rows affected (0.01 sec)

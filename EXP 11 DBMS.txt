@@ -1,0 +1,135 @@
+EXPERIMENT NO-11
+
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\DELL> mysql -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 23
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| seit               |
+| seit1              |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use seit1;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_seit1 |
++-----------------+
+| dept            |
+| emp             |
+| project         |
++-----------------+
+3 rows in set (0.00 sec)
+
+mysql> create table emp1 as select * from emp;
+Query OK, 14 rows affected (0.04 sec)
+Records: 14  Duplicates: 0  Warnings: 0
+
+mysql> delimiter /
+mysql> create procedure insertCursor (in deptnoIn int)
+    -> begin
+    -> declare empno1 int;
+    -> declare ename1 varchar(20);
+    -> declare job1 varchar(10);
+    -> declare mgr1 int;
+    -> declare hiredate1 date;
+    -> declare sal1 float;
+    -> declare comm1 float;
+    -> declare deptno1 int;
+    -> declare cnot int;
+    -> declare c1 cursor for select * from emp where deptno = deptnoIn;
+    -> declare continue handler for not found set cnot=1;
+    -> open c1;
+    -> readLoop:loop
+    -> fetch c1 into empno1, ename1, job1, mgr1, hiredate1,sal1, comm1, deptno1;
+    -> if cnot=1 then
+    -> leave readLoop;
+    -> select 'leave insert';
+    -> else
+    -> Insert into emp1 values (empno1, ename1, job1, mgr1, hiredate1, sal1, comm1,
+    -> deptno1);
+    -> select 'insert done';
+    -> end if;
+    ->
+    -> End loop;
+    -> close c1;
+    -> end;
+    -> /
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> Delimiter ;
+mysql> call insertCursor(10);
++-------------+
+| insert done |
++-------------+
+| insert done |
++-------------+
+1 row in set (0.01 sec)
+
++-------------+
+| insert done |
++-------------+
+| insert done |
++-------------+
+1 row in set (0.02 sec)
+
++-------------+
+| insert done |
++-------------+
+| insert done |
++-------------+
+1 row in set (0.02 sec)
+
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from emp1;
++-------+--------+-----------+------+------------+------+------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | smith  | clerk     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | allen  | saleman   | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | ward   | saleman   | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | jones  | manager   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | martin | saleman   | 7698 | 1981-10-28 | 1250 | 1400 |     30 |
+|  7698 | blake  | manager   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | clark  | manager   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | scott  | analyst   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | king   | president | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | turner | saleman   | 7698 | 1981-10-08 | 1500 | NULL |     30 |
+|  7876 | adams  | clerk     | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7900 | james  | clerk     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | ford   | analyst   | 7566 | 1981-12-04 | 3000 | NULL |     20 |
+|  7934 | miller | clerk     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
+|  7782 | clark  | manager   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7839 | king   | president | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7934 | miller | clerk     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+17 rows in set (0.00 sec)
+
+mysql>

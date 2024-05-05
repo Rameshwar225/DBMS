@@ -1,0 +1,206 @@
+EXPERIMENT NO-10
+
+
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\DELL> mysql -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| seit1              |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use seit1;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_seit1 |
++-----------------+
+| dept            |
+| emp             |
+| emp1            |
+| project         |
++-----------------+
+4 rows in set (0.00 sec)
+
+mysql> drop table emp1;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> drop table dept1;
+ERROR 1051 (42S02): Unknown table 'seit1.dept1'
+mysql> create table emp1 as select * from emp;
+Query OK, 14 rows affected (0.03 sec)
+Records: 14  Duplicates: 0  Warnings: 0
+
+mysql> create table dept1 as select * from dept;
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> delimiter /
+mysql> create trigger dept1Delete
+    -> after delete on dept1
+    -> for each row
+    -> begin
+    -> declare x int;
+    -> set x= old.deptno;
+    -> delete from emp1 where deptno= x;
+    -> end;
+    ->
+    -> /
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> select * from emp1;
++-------+--------+-----------+------+------------+------+------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | smith  | clerk     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | allen  | saleman   | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | ward   | saleman   | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | jones  | manager   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | martin | saleman   | 7698 | 1981-10-28 | 1250 | 1400 |     30 |
+|  7698 | blake  | manager   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | clark  | manager   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | scott  | analyst   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | king   | president | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | turner | saleman   | 7698 | 1981-10-08 | 1500 | NULL |     30 |
+|  7876 | adams  | clerk     | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7900 | james  | clerk     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | ford   | analyst   | 7566 | 1981-12-04 | 3000 | NULL |     20 |
+|  7934 | miller | clerk     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+14 rows in set (0.00 sec)
+
+mysql> delete from dept1 where deptno=10;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp1;
++-------+--------+---------+------+------------+------+------+--------+
+| empno | ename  | job     | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+---------+------+------------+------+------+--------+
+|  7369 | smith  | clerk   | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | allen  | saleman | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | ward   | saleman | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | jones  | manager | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | martin | saleman | 7698 | 1981-10-28 | 1250 | 1400 |     30 |
+|  7698 | blake  | manager | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7788 | scott  | analyst | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7844 | turner | saleman | 7698 | 1981-10-08 | 1500 | NULL |     30 |
+|  7876 | adams  | clerk   | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7900 | james  | clerk   | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | ford   | analyst | 7566 | 1981-12-04 | 3000 | NULL |     20 |
++-------+--------+---------+------+------------+------+------+--------+
+11 rows in set (0.00 sec)
+
+mysql> drop table emp1;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table emp1 as select * from emp;
+Query OK, 14 rows affected (0.04 sec)
+Records: 14  Duplicates: 0  Warnings: 0
+
+mysql> create table totalsal as select deptno,sum(sal) sal from emp1 group by deptno;
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from totalsal;
++--------+-------+
+| deptno | sal   |
++--------+-------+
+|     20 | 10875 |
+|     30 |  9400 |
+|     10 |  8750 |
++--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> delimiter /
+mysql> create trigger emp1Update
+    -> after update on emp1
+    -> for each row
+    -> begin
+    -> if old.sal <> new.sal then
+    -> update totalSal set sal = sal - old.sal + new.sal where deptno = new.deptno;
+    -> end if;
+    -> end;
+    -> /
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> Delimiter ;
+mysql> select * from emp1;
++-------+--------+-----------+------+------------+------+------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal  | comm | deptno |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | smith  | clerk     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | allen  | saleman   | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | ward   | saleman   | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | jones  | manager   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | martin | saleman   | 7698 | 1981-10-28 | 1250 | 1400 |     30 |
+|  7698 | blake  | manager   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | clark  | manager   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | scott  | analyst   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | king   | president | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | turner | saleman   | 7698 | 1981-10-08 | 1500 | NULL |     30 |
+|  7876 | adams  | clerk     | 7788 | 1983-01-03 | 1100 | NULL |     20 |
+|  7900 | james  | clerk     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | ford   | analyst   | 7566 | 1981-12-04 | 3000 | NULL |     20 |
+|  7934 | miller | clerk     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+14 rows in set (0.00 sec)
+
+mysql> select * from totalsal;
++--------+-------+
+| deptno | sal   |
++--------+-------+
+|     20 | 10875 |
+|     30 |  9400 |
+|     10 |  8750 |
++--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> update emp1 set sal=sal-100 where deptno=20;
+Query OK, 5 rows affected (0.00 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from totalsal;
++--------+-------+
+| deptno | sal   |
++--------+-------+
+|     20 | 10375 |
+|     30 |  9400 |
+|     10 |  8750 |
++--------+-------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> drop trigger dept1Delete;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> drop trigger emp1Update;
+Query OK, 0 rows affected (0.01 sec)

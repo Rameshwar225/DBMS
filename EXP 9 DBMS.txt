@@ -1,0 +1,352 @@
+ EXPERIMENT NO. : 9
+
+Write a procedure to update salary of given employee to 3000 if salary is less than 3000 else give 10 percentage increment on emp1 table :
+
+
+Delete table emp1 :
+mysql> drop table emp1;
+Query OK, 0 rows affected (0.38 sec)
+
+
+Create table emp1 same as employee :
+mysql> Create table emp1 as select * from employee; Query OK, 5 rows affected (0.14 sec)
+Records: 20 Duplicates: 0 Warnings: 0
+
+
+mysql> select * from emp1;
++	+	+	+	+	+	+	+	+	+
+| emp_id | emp_name	| designation | hire_date | dob	| address	| emp_salary | dept_id | status |
++	+	+	+	+	+	+	+	+	+
+|	1 | Mohit Ingale	| manager	| 2023-01-15 | 2004-04-29 | Baramati	| 30000.00 |	1 |	1 |
+|	2 | Abhijeet Kharade | engineer	| 2022-11-20 | 2005-06-23 | Baramati	| 40000.00 |	2 |	1 |
+|	3 | Kajal Baravkar | worker	| 2024-03-10 | 2004-06-12 | Baramati	| 80000.00 |	1 |	1 |
+|	4 | Isha Khetre	| analyst	| 2022-09-05 | 2005-05-01 | Baramati	| 10000.00 |	3 |	1 |
+|	5 | Sandesh Dhumal   | developer | 2023-05-12 | 2004-07-22 | Baramati	| 20000.00 |	2 |	1 |
+
++	+	+	+	+	+	+	+	+	+ 5 rows in set (0.00 sec)
+
+Create procedure incrSal :
+mysql> delimiter /
+mysql> create procedure incrSal(in emp_id1 int)
+-> begin
+->	declare emp_salary1 float(10,2);
+->	select emp_salary into emp_salary1 from emp1 where emp_id = emp_id1;
+->	if emp_salary1 > 3000 then
+->	update emp1 set emp_salary = emp_salary + emp_salary * 0.1 where emp_id = emp_id1;
+->	else
+->	update emp1  set emp_salary = 3000 where emp_id = emp_id1;
+->	end if;
+-> end /
+Query OK, 0 rows affected (0.01 sec)
+
+
+mysql> call incrSal(20);/
+Query OK, 1 row affected (0.13 sec)
+
+
+mysql> select * from emp1;/
++	+	+	+	+	+	+	+	+	+
+| emp_id | emp_name	| designation | hire_date | dob	| address	| emp_salary | dept_id | status |
++	+	+	+	+	+	+	+	+	+
+|	1 | Mohit Ingale	| manager	| 2023-01-15 | 2004-04-29 | Baramati	| 30000.00 |	1 |	1 |
+|	2 | Abhijeet Kharade    | engineer	| 2022-11-20 | 2005-06-23 | Baramati	| 40000.00 |	2 |	1  
+
++	+	+	+	+	+	+	+	+	+ 5 rows in set (0.00 sec)
+
+mysql> call incrSal(1);/
+Query OK, 1 row affected (0.03 sec)
+
+
+mysql> select * from emp1;/
++	+	+	+	+	+	+	+	+	+
+| emp_id | emp_name	| designation | hire_date | dob	| address	| emp_salary | dept_id | status |
++	+	+	+	+	+	+	+	+	+
+|	1 | Mohit Ingale	| manager	| 2023-01-15 | 2004-04-29 | Baramati	| 33000.00 |	1 |	1 |
+|	2 | Abhijeet Kharade  | engineer	| 2022-11-20 | 2005-06-23 | Baramati	| 40000.00 |	2 |	1 |
+|	3 | Kajal Baravkar | worker	| 2024-03-10 | 2004-06-12 | Baramati	| 80000.00 |	1 |	1 |
+|	4 | Isha Khetre	| analyst	| 2022-09-05 | 2005-05-01 | Baramati	| 10000.00 |	3 |	1  
+
++	+	-+	+	+	+	+	+	+	+ 5 rows in set (0.00 sec)
+
+Delete procedure incrSal : mysql> drop procedure incrSal;/
+Query OK, 0 rows affected (0.02 sec)
+ 
+Write a plsql procedure which will insert all the details of given employee with emp_id to a new empty table emp1 which has same structure as employee :
+
+
+Drop table emp1 :
+mysql> drop table emp1;
+Query OK, 0 rows affected (0.22 sec)
+
+
+Create table emp1 same as employee :
+mysql> create table emp1 as select * from employee; Query OK, 5 rows affected (0.08 sec)
+Records: 5 Duplicates: 0 Warnings: 0
+
+
+mysql> select * from emp1;
++	+	+	+	+	+	+	+	+	+
+| emp_id | emp_name	| designation | hire_date | dob	| address	| emp_salary | dept_id | status |
++	+	+	+	+	+	+	+	+	+
+
+|	1 | Mohit Ingale	| manager	| 2023-01-15 | 2004-04-29 | Baramati	| 30000.00 |	1 |	1 |
+|	2 | Abhijeet Kharade     | engineer	| 2022-11-20 | 2005-06-23 | Baramati	| 40000.00 |	2 |	1 |
+|	3 | Kajal Baravkar | worker	| 2024-03-10 | 2004-06-12 | Baramati	| 80000.00 |	1 |	1 |
+|	4 | Isha Khetre	| analyst	| 2022-09-05 | 2005-05-01 | Baramati	| 10000.00 |	3 |	1 |
+|	5 | Sandesh Dhumal   | developer | 2023-05-12 | 2004-07-22 | Baramati	| 20000.00 |	2 |	1 |
+ 
++	+	+	+	+	+	+	+	+	+ 5 rows in set (0.01 sec)
+
+Delete data from emp1 table :
+mysql> delete from emp1;
+Query OK, 5 rows affected (0.12 sec)
+
+
+mysql> select * from emp1; Empty set (0.00 sec)
+
+Create procedure insertemp :
+mysql> delimiter /
+mysql> create procedure insertemp(in emp_id_in int)
+-> begin
+->	declare emp_id1 int;
+->	declare emp_name1 varchar(20);
+->	declare designation1 varchar(10);
+->	declare hire_date1 date;
+->	declare dob1 date;
+->	declare address1 varchar(50);
+->	declare emp_salary1 float;
+->	declare dept_id1 int;
+->	declare status1 int;
+->	select emp_id, emp_name, designation, hire_date, dob, address, emp_salary, dept_id, status
+->	into emp_id1, emp_name1, designation1, hire_date1, dob1, address1, emp_salary1, dept_id1, status1
+->	from employee
+->	where emp_id = emp_id_in;
+->	insert into emp1
+ 
+->	values (emp_id1, emp_name1, designation1, hire_date1, dob1, address1, emp_salary1, dept_id1, status1);
+-> end;
+-> /
+Query OK, 0 rows affected (0.00 sec)
+
+
+mysql> call insertemp(1);/
+Query OK, 1 row affected (0.39 sec)
+
+
+mysql> select * from emp1;/
++	+	+	+	+	+	+	+	+	+
+| emp_id | emp_name	| designation | hire_date | dob	| address | emp_salary | dept_id | status |
++	+	+	+	+	+	+	+	+	+
+|	1 | Mohit Ingale  | manager	| 2023-01-15 | 2004-04-29 | Baramati | 30000.00 |	1 |	1 |
++	+	+	+	+	+	+	+	+	+ 1 row in set (0.00 sec)
+
+mysql> call insertemp(20);/
+Query OK, 1 row affected (0.35 sec)
+
+
+mysql> select * from emp1;/
++	+	+	+	+	+	+	+	+	+
+| emp_id | emp_name	| designation | hire_date | dob	| address | emp_salary | dept_id | status |
++	+	+	+	+	+	+	+	+	+
+|	1 | Mohit Ingale   | manager	| 2023-01-15 | 2004-04-29 | Baramati | 30000.00 |	1 |	1 |
+|	2 |  Abhijeet Kharade    | engineer	| 2023-05-05 | 2005-06-20 | Daund	| 77000.00 |	3 |	1 |
++	+	+	+	+	+	+	+	+	+ 2 rows in set (0.00 sec)
+
+Delete procedure insertemp : mysql> drop procedure insertemp;/
+Query OK, 0 rows affected (0.45 sec)
+ 
+Write a plsql function which will return total salary paid to given department number :
+
+
+Use database :
+mysql> use ems2;
+Database changed
+
+
+Delete table emp1 :
+mysql> drop table emp1;
+Query OK, 0 rows affected (0.02 sec)
+
+
+Create table emp1 same as employee :
+mysql> create table emp1 as select * from employee; Query OK, 20 rows affected (0.15 sec)
+Records: 20 Duplicates: 0 Warnings: 0
+
+
+mysql> select * from emp1;
++	+	+	+	+	+	+	+	+	+
+| emp_id | emp_name	| designation | hire_date | dob	| address	| emp_salary | dept_id | status |
++	+	+	+	+	+	+	+	+	+
+
+|	1 | Mohit Ingale	| manager	| 2023-01-15 | 2004-04-29 | Baramati	| 30000.00 |	1 |	1 |
+|	2 | Abhijeet Kharade  | engineer	| 2022-11-20 | 2005-06-23 | Baramati	| 40000.00 |	2 |	1 |
+|	3 | Kajal Baravkar | worker	| 2024-03-10 | 2004-06-12 | Baramati	| 80000.00 |	1 |	1 |
+|	4 | Isha Khetre	| analyst	| 2022-09-05 | 2005-05-01 | Baramati	| 10000.00 |	3 |	1 |
+|	5 | Sandesh Dhumal   | developer | 2023-05-12 | 2004-07-22 | Baramati	| 20000.00 |	2 |	1 |
+	
+	
+	
+	
+	
+	
+	
+	+	+	+	+	+	+	+	+	+ 5 rows in set (0.00 sec)
+
+Create function findTotalSal :
+mysql> delimiter /
+mysql> create function findTotalSal(d1 int) returns float
+-> begin
+->	declare x float;
+->	set x = 0;
+->	select sum(emp_salary) into x from emp1 where dept_id = d1;
+->	return (x);
+-> end;
+-> /
+Query OK, 0 rows affected (0.30 sec) mysql> select findTotalSal(3);/
++	+
+| findTotalSal(3) |
++	+
+|	217000 |
++	+
+1 row in set (0.12 sec)
+Delete function findTotalSal : mysql> drop function findTotalSal;/ Query OK, 0 rows affected (0.01 sec)
+ 
+Write a procedure to update salary of given employee to 100 if comm is null else increase comm by 10 percentage on emp1 table :
+
+
+Delete table emp1 :
+mysql> drop table emp1; /
+Query OK, 0 rows affected (0.35 sec)
+
+
+Create table emp1 same as employee :
+mysql> create table emp1 as select * from employee;/ Query OK, 5 rows affected (0.12 sec)
+Records: 5 Duplicates: 0 Warnings: 0
+
+
+Create procedure updatesalaryandcomm :
+mysql> delimiter /
+mysql> create procedure updatesalaryandcomm(emp_id_in int)
+-> begin
+->	declare emp_sal float;
+->	declare emp_comm float;
+->	-- Get current salary and commission for the employee
+->	select emp_salary, emp_comm into emp_sal, emp_comm from emp1 where emp_id = emp_id_in;
+->	if emp_comm is null then
+->	-- If commission is null, update salary to 100
+->	update emp1 set emp_salary = 100 where emp_id = emp_id_in;
+->	else
+->	-- If commission is not null, increase commission by 10%
+->	update emp1 set emp_comm = emp_comm * 1.1 where emp_id = emp_id_in;
+->	end if;
+-> end;
+-> /
+Query OK, 0 rows affected (0.35 sec)
+
+
+mysql> call updatesalaryandcomm(1);
+ 
+Query OK, 1 row affected (0.13 sec)
+
+
+mysql> select * from emp1;/
++	+	+	+	+	+	+	+	+	+
+| emp_id | emp_name	| designation | hire_date | dob	| address	| emp_salary | dept_id | status |
++	+	+	+	+	+	+	+	+	+
+|	1 | Komal Chavan 	| manager	| 2023-01-15 | 2004-04-29 | Baramati	|	100.00 |	1 |	1 |
+|	2 | Rutuja Gaikwad | engineer	| 2022-11-20 | 2005-06-23 | Baramati	| 40000.00 |	2 |	1 |
+|	3 | Kajal Baravkar | worker	| 2024-03-10 | 2004-06-12 | Baramati	| 80000.00 |	1 |	1 |
+|	4 | Isha Khetre	| analyst	| 2022-09-05 | 2005-05-01 | Baramati	| 10000.00 |	3 |	1 |
+|	5 | Anita Jadhav	| developer | 2023-05-12 | 2004-07-22 | Baramati	| 20000.00 |	2 |	1 |
++	+	+	+	+	+	+	+	+	+ 5 rows in set (0.00 sec)
+
+Delete procedure updatesalaryandcomm : mysql> drop procedure updatesalaryandcomm; Query OK, 0 rows affected (0.00 sec)
+ 
+Write a plsql procedure which will delete all the details of given employee with empno from emp1 table :
+
+
+Delete table emp1 :
+mysql> drop table emp1;
+Query OK, 0 rows affected (0.00 sec)
+
+
+Create table emp1 same as employee :
+mysql> create table emp1 as select * from employee; Query OK, 5 rows affected (0.38 sec)
+Records: 5 Duplicates: 0 Warnings: 0
+
+
+Create procedure deleteEmployee :
+mysql> delimiter /
+mysql> create procedure deleteEmployee(in emp_id_in int)
+-> begin
+->	delete from emp1 where emp_id = emp_id_in;
+->	commit;
+-> end;
+-> /
+Query OK, 0 rows affected (0.00 sec)
+
+
+mysql> call deleteEmployee(1); Query OK, 0 rows affected (0.34 sec)
+
+mysql> select * from emp1;
++	+	+	+	+	+	+	+	+	+
+| emp_id | emp_name	| designation | hire_date | dob	| address	| emp_salary | dept_id | status |
++	+	+	+	+	+	+	+	+	+
+|	2 | Arun Karche   | engineer	| 2022-11-20 | 2005-06-23 | Baramati	| 40000.00 |	2 |	1 |
+|	3 | Kajal Baravkar | worker	| 2024-03-10 | 2004-06-12 | Baramati	| 80000.00 |	1 |	1 |
+|	4 | Isha Khetre	| analyst	| 2022-09-05 | 2005-05-01 | Baramati	| 10000.00 |	3 |	1  
+
++	+	+	+	+	+	+	+	+	+ 4 rows in set (0.00 sec)
+
+Delete procedure deleteEmployee : mysql> drop procedure deleteEmployee;/ Query OK, 0 rows affected (0.03 sec)
+ 
+Write a plsql function which will return total number of employees working in given department number :
+
+
+Delete table emp1 :
+mysql> drop table emp1;
+Query OK, 0 rows affected (0.00 sec)
+
+
+Create table emp1 same as employee :
+mysql> create table emp1 as select * from employee; Query OK, 5 rows affected (0.46 sec)
+Records: 5 Duplicates: 0 Warnings: 0
+
+
+mysql> select * from emp1;
++	+	+	+	+	+	+	+	+	+
+| emp_id | emp_name	| designation | hire_date | dob	| address	| emp_salary | dept_id | status |
++	+	+	+	+	+	+	+	+	+
+
+|	1 | Mohit Ingale	| manager	| 2023-01-15 | 2004-04-29 | Baramati	| 30000.00 |	1 |	1 |
+|	2 | Arun Karche | engineer	| 2022-11-20 | 2005-06-23 | Baramati	| 40000.00 |	2 |	1 |
+|	3 | Kajal Baravkar | worker	| 2024-03-10 | 2004-06-12 | Baramati	| 80000.00 |	1 |	1 |
+|	4 | Isha Khetre	| analyst	| 2022-09-05 | 2005-05-01 | Baramati	| 10000.00 |	3 |	1 |
+|	5 | Sandesh Dhumal   | developer | 2023-05-12 | 2004-07-22 | Baramati	| 20000.00 |	2 |	1 |
++	+	+	+	+	+	+	+	+	+ 5 rows in set (0.01 sec)
+
+Create function countemployee :
+mysql> delimiter /
+mysql> create function countemployee(dept_id_in int)
+-> returns int
+-> begin
+-> declare emp_count int;
+-> select count(*) into emp_count
+-> from emp1
+-> where dept_id = dept_id_in;
+-> return emp_count;
+-> end;
+-> /
+Query OK, 0 rows affected (0.10 sec)
+
+
+mysql> select countemployee(1);/
++	+
+| countemployee(1) |
++	+
+|	2  |
++	+
+1 row in set (0.00 sec)
+
+
+Delete function countemployee : mysql> drop function countemployee;/ Query OK, 0 rows affected (0.00 sec)
